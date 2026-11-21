@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:material_ui/material_ui.dart' hide GlobalMaterialLocalizations, MaterialApp, ThemeData;
 import 'package:sanad/core/routes/app_router.dart';
 import 'package:sanad/l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -12,6 +12,12 @@ Future<void> main() async {
     url: 'https://kdzvfetkbgicvfgedpuc.supabase.co',
     publishableKey: 'sb_publishable_r3XiLkp2Ny-9pay-MbEtBg_1mY4Z1TT',
   );
+
+  // السطر دا علشان البرنامج يكون بالطول بسس ومش ينفع يكون بالعرض
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   // محدش ليه دعوة بال 3 سطور دول
 
@@ -29,20 +35,18 @@ class Sanad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360, 690),
+      designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp.router(
         theme: ThemeData(fontFamily: 'Cairo'),
 
         title: 'Sanad',
-        locale: Locale('ar'),
+        locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: router,

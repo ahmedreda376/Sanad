@@ -40,7 +40,6 @@ class Auth {
         btnOkOnPress: () {},
       ).show();
 
-      // customSnakbar(context, message, Colors.red);
       return false;
     } catch (e) {
       if (!context.mounted) return false;
@@ -54,11 +53,6 @@ class Auth {
         btnCancelOnPress: () {},
         btnOkOnPress: () {},
       ).show();
-      // customSnakbar(
-      //   context,
-      //   'Login failed. Please check your connection and try again.',
-      //   Colors.red,
-      // );
       return false;
     }
   }
@@ -92,12 +86,6 @@ class Auth {
           btnCancelOnPress: () {},
           btnOkOnPress: () {},
         ).show();
-
-        // customSnakbar(
-        //   context,
-        //   'This email is already registered. Try logging in instead.',
-        //   Colors.red,
-        // );
         return false;
       }
 
@@ -110,12 +98,6 @@ class Auth {
         btnCancelOnPress: () {},
         btnOkOnPress: () {},
       ).show();
-
-      // customSnakbar(
-      //   context,
-      //   'Account created. Please check your email to confirm it.',
-      //   Colors.green,
-      // );
 
       return true;
     } on AuthException catch (e) {
@@ -131,7 +113,6 @@ class Auth {
         btnOkOnPress: () {},
       ).show();
 
-      // customSnakbar(context, e.message, Colors.red);
       return false;
     } catch (e) {
       if (!context.mounted) return false;
@@ -145,11 +126,6 @@ class Auth {
         btnCancelOnPress: () {},
         btnOkOnPress: () {},
       ).show();
-      // customSnakbar(
-      //   context,
-      //   'Sign up failed. Please check your connection and try again.',
-      //   Colors.red,
-      // );
       return false;
     }
   }
@@ -159,57 +135,44 @@ class Auth {
     try {
       await supa.resetPasswordForEmail(email);
       if (!context.mounted) return false;
-      
 
-         AwesomeDialog(
-          context: context,
-          dialogType: DialogType.success,
-          animType: AnimType.rightSlide,
-          title: 'Success',
-          desc:  'We sent a code to your email',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-
-
-      // customSnakbar(context, 'We sent a code to your email', Colors.green);
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.rightSlide,
+        title: 'Success',
+        desc: 'We sent a code to your email',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
 
       return true;
     } on AuthException catch (e) {
       if (!context.mounted) return false;
 
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc: e.message,
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-
-      // customSnakbar(context, e.message, Colors.red);
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: e.message,
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
 
       return false;
     } catch (e) {
       if (!context.mounted) return false;
 
-
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc:  'Could not send the code. Please check your connection and try again.',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-
-      // customSnakbar(
-      //   context,
-      //   'Could not send the code. Please check your connection and try again.',
-      //   Colors.red,
-      // );
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: 'Could not send the code. Please check your connection and try again.',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
 
       return false;
     }
@@ -224,36 +187,27 @@ class Auth {
     } on AuthException catch (e) {
       if (!context.mounted) return;
 
-
-     AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc: e.message,
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      
-      // customSnakbar(context, e.message, Colors.red);
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: e.message,
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
     } catch (e) {
       if (!context.mounted) return;
 
-
-           AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc:'Could not verify the code. Please check your connection and try again.',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      // customSnakbar(
-      //   context,
-      //   'Could not verify the code. Please check your connection and try again.',
-      //   Colors.red,
-      // );
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: 'Could not verify the code. Please check your connection and try again.',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
     }
   }
 
@@ -264,49 +218,40 @@ class Auth {
       await supa.signOut();
       if (!context.mounted) return;
 
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.rightSlide,
+        title: 'Success',
+        desc: 'Password updated successfully',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
 
-
-           AwesomeDialog(
-          context: context,
-          dialogType: DialogType.success,
-          animType: AnimType.rightSlide,
-          title: 'Success',
-          desc:  'Password updated successfully',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      
-      // customSnakbar(context, 'Password updated successfully', Colors.green);
       context.go('/finishOtp');
     } on AuthException catch (e) {
       if (!context.mounted) return;
 
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc:e.message,
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      // customSnakbar(context, e.message, Colors.red);
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: e.message,
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
     } catch (e) {
       if (!context.mounted) return;
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.rightSlide,
-          title: 'Error',
-          desc: 'Could not update your password. Please check your connection and try again.',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
-        ).show();
-      // customSnakbar(
-      //   context,
-      //   'Could not update your password. Please check your connection and try again.',
-      //   Colors.red,
-      // );
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: 'Error',
+        desc: 'Could not update your password. Please check your connection and try again.',
+        btnCancelOnPress: () {},
+        btnOkOnPress: () {},
+      ).show();
     }
   }
 }

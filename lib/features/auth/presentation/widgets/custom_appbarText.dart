@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sanad/core/constants/colors.dart';
 import 'package:sanad/core/widgets/custom_text.dart';
@@ -14,16 +14,13 @@ class CustomAppbartext extends StatelessWidget {
   // Build app bar text
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
-      child: AppText(
-        text,
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: DarkTeal,
-          fontSize: 25.sp,
-        ),
+    return AppText(
+      text,
+      textAlign: TextAlign.start,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: DarkTeal,
+        fontSize: 25.sp,
       ),
     );
   }

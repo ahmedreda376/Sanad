@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sanad/features/auth/presentation/screens/finish_otp_screen.dart';
 import 'package:sanad/features/auth/presentation/screens/forget_password.dart';
 import 'package:sanad/features/auth/presentation/screens/home_screen.dart';
-import 'package:sanad/features/auth/presentation/screens/login_Provider.dart';
 import 'package:sanad/features/auth/presentation/screens/login_User_screen.dart';
 import 'package:sanad/features/auth/presentation/screens/new_Password.dart';
 import 'package:sanad/features/auth/presentation/screens/otp_screen.dart';
@@ -23,10 +22,6 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(path: '/newPassword', builder: (context, state) => NewPassword()),
     GoRoute(path: '/loginUser', builder: (context, state) => LoginUserScreen()),
-    GoRoute(
-      path: '/loginProvider',
-      builder: (context, state) => LoginProvider(),
-    ),
     GoRoute(
       path: '/forgetPassword',
       builder: (context, state) => ForgetPassword(),

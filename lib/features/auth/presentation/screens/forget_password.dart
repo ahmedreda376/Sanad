@@ -1,5 +1,4 @@
-
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sanad/core/constants/colors.dart';
@@ -33,23 +32,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     super.dispose();
   }
 
-  // Send OTP to the entered email
-  Future<void> _sendOtp() async {
-    if (isLoading) return;
-    if (!globKey.currentState!.validate()) return;
-
-    setState(() => isLoading = true);
-
-    final email = emailController.text.trim();
-    final ok = await Auth().sendOtp(email, context);
-
-    if (!mounted) return;
-    setState(() => isLoading = false);
-
-    // Navigate to OTP screen
-    if (ok) context.push('/otpScreen', extra: email);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,50 +54,67 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Email label
-                      Padding(
-                        padding: EdgeInsets.all(8.w),
-                        child: CustomTextlabel(
-                          text: AppLocalizations.of(context)!.enterYourEmail,
-                        ),
-                      ),
-
-                      // Email input field
-                      Padding(
-                        padding: EdgeInsets.all(8.w),
-                        child: Form(
-                          key: globKey,
-                          child: CustomTextformfield(
-                            validator: Validators.email,
-                            keyboardType: TextInputType.emailAddress,
-                            isPassword: false,
-                            controller: emailController,
-                            bordercolor: Rust,
-                            text: 'example@gmail.com',
-                            icon: Icons.email_outlined,
-                            fillcolor: SeaShell,
-                          ),
-                        ),
-                      ),
-
-                      // Button spacing
-                      SizedBox(height: 10.h),
-
-                      // Send OTP button
-                      GestureDetector(
-                        onTap: _sendOtp,
-                        child: Padding(
+                  child: Padding(
+                    padding:  EdgeInsets.all(10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Email label
+                        Padding(
                           padding: EdgeInsets.all(8.w),
-                          child: CustomButton(
-                            text: AppLocalizations.of(context)!.sendOtpButton,
-                            isLoading: isLoading,
+                          child: CustomTextlabel(
+                            text: AppLocalizations.of(context)!.enterYourEmail,
                           ),
                         ),
-                      ),
-                    ],
+                    
+                        // Email input field
+                        Padding(
+                          padding: EdgeInsets.all(8.w),
+                          child: Form(
+                            key: globKey,
+                            child: CustomTextformfield(
+                              validator: Validators.email,
+                              keyboardType: TextInputType.emailAddress,
+                              isPassword: false,
+                              controller: emailController,
+                              bordercolor: Rust,
+                              text: 'example@gmail.com',
+                              icon: Icons.email_outlined,
+                              fillcolor: SeaShell,
+                            ),
+                          ),
+                        ),
+                    
+                        // Button spacing
+                        SizedBox(height: 10.h),
+                    
+                        // Send OTP button
+                        InkWell(
+                          onTap: () async {
+                            if (isLoading) return;  
+                            if (!globKey.currentState!.validate()) return;
+                    
+                            setState(() => isLoading = true);
+                    
+                            final email = emailController.text.trim();
+                            final ok = await Auth().sendOtp(email, context);
+                    
+                            if (!mounted) return;
+                            setState(() => isLoading = false);
+                    
+                            // Navigate to OTP screen
+                            if (ok) context.push('/otpScreen', extra: email);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(8.w),
+                            child: CustomButton(
+                              text: AppLocalizations.of(context)!.sendOtpButton,
+                              isLoading: isLoading,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

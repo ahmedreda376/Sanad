@@ -1,5 +1,4 @@
-
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sanad/core/constants/colors.dart';
 import 'package:sanad/features/auth/data/repo/auth.dart';
@@ -32,17 +31,6 @@ class _NewPasswordState extends State<NewPassword> {
     super.dispose();
   }
 
-  // Handle password reset
-  Future<void> _reset() async {
-    if (isLoading) return;
-    if (!globKey.currentState!.validate()) return;
-
-    setState(() => isLoading = true);
-    await Auth().resetPassword(passController.text, context);
-    if (!mounted) return;
-    setState(() => isLoading = false);
-  }
-
   // Build new password screen
   @override
   Widget build(BuildContext context) {
@@ -66,56 +54,71 @@ class _NewPasswordState extends State<NewPassword> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Password instruction
-                      Padding(
-                        padding: EdgeInsets.all(8.w),
-                        child: CustomTextlabel(
-                          text: AppLocalizations.of(context)!.enterNewPassword,
-                        ),
-                      ),
-
-                      // Password form
-                      Padding(
-                        padding: EdgeInsets.all(8.w),
-                        child: Form(
-                          key: globKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              // New password field
-                              CustomTextformfield(
-                                validator: Validators.password,
-                                isPassword: true,
-                                controller: passController,
-                                bordercolor:Rust,
-                                fillcolor:SeaShell,
-                                icon: Icons.visibility_off_outlined,
-                                text: '••••••••',
-                              ),
-                              SizedBox(height: 20.h),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      // Done button
-                      SizedBox(height: 10.h),
-                      GestureDetector(
-                        onTap: _reset,
-                        child: Padding(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Password instruction
+                        Padding(
                           padding: EdgeInsets.all(8.w),
-                          child: CustomButton(
-                            text: AppLocalizations.of(context)!.doneButton,
-                            isLoading: isLoading,
+                          child: CustomTextlabel(
+                            text: AppLocalizations.of(context)!
+                                .enterNewPassword,
                           ),
                         ),
-                      ),
-                    ],
+
+                        // Password form
+                        Padding(
+                          padding: EdgeInsets.all(8.w),
+                          child: Form(
+                            key: globKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // New password field
+                                CustomTextformfield(
+                                  validator: Validators.password,
+                                  isPassword: true,
+                                  controller: passController,
+                                  bordercolor: Rust,
+                                  fillcolor: SeaShell,
+                                  icon: Icons.visibility_off_outlined,
+                                  text: '••••••••',
+                                ),
+                                SizedBox(height: 20.h),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // Done button
+                        SizedBox(height: 10.h),
+                        InkWell(
+                          onTap: () async {
+                            if (isLoading) return;
+                            if (!globKey.currentState!.validate()) return;
+
+                            setState(() => isLoading = true);
+                            await Auth().resetPassword(
+                              passController.text,
+                              context,
+                            );
+                            if (!mounted) return;
+                            setState(() => isLoading = false);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(8.w),
+                            child: CustomButton(
+                              text: AppLocalizations.of(context)!.doneButton,
+                              isLoading: isLoading,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

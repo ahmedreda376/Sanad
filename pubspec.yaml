@@ -53,6 +53,7 @@ dependencies:
   awesome_dialog: ^3.3.0
   google_fonts: ^9.0.0
 
+  cupertino_ui: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

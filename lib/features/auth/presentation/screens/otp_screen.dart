@@ -1,5 +1,4 @@
-
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sanad/core/constants/colors.dart';
@@ -34,17 +33,6 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
-  // Verify OTP code
-  Future<void> _verify() async {
-    if (isLoading) return;
-    if (!globKey.currentState!.validate()) return;
-
-    setState(() => isLoading = true);
-    await Auth().verifyOtp(widget.email, otpController.text, context);
-    if (!mounted) return;
-    setState(() => isLoading = false);
-  }
-
   // Build OTP screen
   @override
   Widget build(BuildContext context) {
@@ -62,53 +50,68 @@ class _OtpScreenState extends State<OtpScreen> {
         // OTP page content
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // OTP instruction message
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: CustomTextlabel(
-                    text: AppLocalizations.of(context)!.otpMessage,
-                  ),
-                ),
-
-                // OTP input form
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: Form(
-                    key: globKey,
-                    child: CustomTextformfield(
-                      validator: Validators.otp,
-                      keyboardType: TextInputType.number,
-
-                      // Allow digits only and limit input to 6 characters
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(6),
-                      ],
-                      controller: otpController,
-                      bordercolor: Rust,
-                      text: '384591',
-                      fillcolor: SeaShell,
-                    ),
-                  ),
-                ),
-
-                // Verify button
-                SizedBox(height: 10.h),
-                GestureDetector(
-                  onTap: _verify,
-                  child: Padding(
+            child: Padding(
+              padding:  EdgeInsets.all(10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // OTP instruction message
+                  Padding(
                     padding: EdgeInsets.all(8.w),
-                    child: CustomButton(
-                      text: AppLocalizations.of(context)!.verifyOtpButton,
-                      isLoading: isLoading,
+                    child: CustomTextlabel(
+                      text: AppLocalizations.of(context)!.otpMessage,
                     ),
                   ),
-                ),
-              ],
+              
+                  // OTP input form
+                  Padding(
+                    padding: EdgeInsets.all(8.w),
+                    child: Form(
+                      key: globKey,
+                      child: CustomTextformfield(
+                        validator: Validators.otp,
+                        keyboardType: TextInputType.number,
+              
+                        // Allow digits only and limit input to 6 characters
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(6),
+                        ],
+                        controller: otpController,
+                        bordercolor: Rust,
+                        text: '384591',
+                        fillcolor: SeaShell,
+                      ),
+                    ),
+                  ),
+              
+                  // Verify button
+                  SizedBox(height: 10.h),
+                  InkWell(
+                    onTap: () async {
+                      if (isLoading) return;
+                      if (!globKey.currentState!.validate()) return;
+              
+                      setState(() => isLoading = true);
+                      await Auth().verifyOtp(
+                        widget.email,
+                        otpController.text,
+                        context,
+                      );
+                      if (!mounted) return;
+                      setState(() => isLoading = false);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(8.w),
+                      child: CustomButton(
+                        text: AppLocalizations.of(context)!.verifyOtpButton,
+                        isLoading: isLoading,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
